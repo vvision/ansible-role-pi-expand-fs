@@ -2,7 +2,6 @@
 - name: Verify
   hosts: all
   become: true
-  remote_user: root
 
   tasks:
     - name: Check if FS is expandable
