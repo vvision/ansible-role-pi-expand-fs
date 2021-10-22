@@ -1,0 +1,15 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  remote_user: root
+
+  tasks:
+    - name: Check if FS is expandable
+      shell: "raspi-config nonint get_can_expand"
+      register: fs_filled
+
+    - name: Check that FS has been expanded
+      assert:
+        that:
+          - fs_filled.stdout == '1'

@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  remote_user: pi
+
+  roles:
+    - role: vvision.pi_expand_fs
+      vars:
+        is_test: true

@@ -1,0 +1,38 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: vv1s10n/docker-raspberry-pi-os-ansible:latest
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      instance: # setting for the platform instance named 'instance'
+        ansible_user: pi
+verifier:
+  name: ansible
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # Disable as it should take a reboot to ensure expand_fs has been executed
+    # - idempotence
+    - side_effect
+    # Disable as it should take a reboot to ensure expand_fs has been executed
+    # - verify
+    - cleanup
+    - destroy
