@@ -21,4 +21,4 @@
   # Cannot test reboot as it will kill container
 
 # Previous implementation inspiration history:
-# https://github.com/mikolak-net/ansible-raspi-config
+# see: https://github.com/mikolak-net/ansible-raspi-config

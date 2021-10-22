@@ -13,8 +13,6 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
-verifier:
-  name: ansible
 scenario:
   test_sequence:
     - dependency
