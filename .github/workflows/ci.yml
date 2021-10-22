@@ -43,6 +43,17 @@ jobs:
       - name: Install test dependencies.
         run: pip3 install ansible molecule[docker] yamllint ansible-lint
 
+      # This is necessary to allow running systemd in rootless containers.
+      # see: https://github.com/actions/virtual-environments/issues/3536
+      # see: https://github.com/ansible-community/molecule/discussions/3155
+      # see: https://github.com/ansible-community/molecule/discussions/3155#discussioncomment-1399189
+      # ref: https://github.com/gotmax23/ansible-role-update/blob/5a22e1ff20aa34834a1b2b7c5a7232b445f79404/.github/workflows/molecule.yml#L133
+      # ref: https://github.com/fauust/ansible-role-mariadb/commit/be3e1a07ee5d0992f2c3d03f22a4f3755a7343df
+      - name: Start systemd user service
+        run: |
+          loginctl enable-linger $(whoami)
+          sleep 1
+
       - name: Run Molecule tests.
         run: molecule test
         env:
